@@ -414,6 +414,22 @@ class PodcastIndexClient {
     return result;
   }
 
+  /** This call returns everything we know about the feed. */
+  public async podcastByGuid(guid: string): Promise<ApiResponse.PodcastByGuid> {
+    const result = await this.fetch<ApiResponse.PodcastByGuid>("/podcasts/byguid", { guid });
+    if (!result.feed.categories) {
+      result.feed.categories = {};
+    }
+
+    track("Feed by GUID", {
+      guid,
+      categoryCount: Object.keys(result.feed.categories).length,
+      status: result.status,
+    });
+
+    return result;
+  }
+
   /**
    * This call returns the podcasts/feeds that in the index that are trending.
    *

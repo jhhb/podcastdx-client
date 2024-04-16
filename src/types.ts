@@ -282,6 +282,7 @@ export namespace ApiResponse {
 
   export type PodcastById = ApiResponse.Podcast;
   export type PodcastByUrl = ApiResponse.Podcast;
+  export type PodcastByGuid = ApiResponse.Podcast;
   export interface PodcastByItunesId {
     status: ApiResponse.Status;
     feed: PIApiItunesPodcast;
