@@ -8,9 +8,11 @@ describe("podcasts api", () => {
   let feedByUrl: PIApiPodcast;
   let feedById: PIApiPodcast;
   let feedByItunesId: PIApiItunesPodcast;
+  let feedByGuid: PIApiPodcast;
   const feedUrl = "https://feeds.theincomparable.com/batmanuniversity";
   const feedId = 75075;
   const iTunesId = 1441923632;
+  const guid = "ac9907f2-a748-59eb-a799-88a9c8bfb9f5";
 
   beforeAll(async () => {
     client = new PodcastIndexClient({
@@ -20,6 +22,7 @@ describe("podcasts api", () => {
     feedByUrl = await (await client.podcastByUrl(feedUrl)).feed;
     feedById = await (await client.podcastById(feedId)).feed;
     feedByItunesId = await (await client.podcastByItunesId(iTunesId)).feed;
+    feedByGuid = (await client.podcastByGuid(guid)).feed;
   });
 
   describe("podcastByFeedUrl", () => {
@@ -66,6 +69,22 @@ describe("podcasts api", () => {
     });
     it.skip("returns same object as byItunesId", async () => {
       const searchResult = await client.podcastById(feedId);
+      expect(searchResult.feed).toEqual(feedByItunesId);
+    });
+  });
+
+  describe("podcastByGuid", () => {
+    it("supports basic call", async () => {
+      const searchResult = await client.podcastByGuid(guid);
+      expect(searchResult.status).toEqual(ApiResponse.Status.Success);
+      expect(searchResult.feed).toHaveProperty("title", "Batman University");
+    });
+    it("returns same object as byUrl", async () => {
+      const searchResult = await client.podcastByGuid(guid);
+      expect(searchResult.feed).toEqual(feedByUrl);
+    });
+    it.skip("returns same object as byItunesId", async () => {
+      const searchResult = await client.podcastByUrl(feedUrl);
       expect(searchResult.feed).toEqual(feedByItunesId);
     });
   });
