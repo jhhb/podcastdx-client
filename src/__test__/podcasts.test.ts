@@ -55,6 +55,10 @@ describe("podcasts api", () => {
       const searchResult = await client.podcastByItunesId(iTunesId);
       expect(searchResult.feed).toEqual(feedById);
     });
+    it.skip("returns same object as byGuid", async () => {
+      const searchResult = await client.podcastByItunesId(iTunesId);
+      expect(searchResult.feed).toEqual(feedByGuid);
+    });
   });
 
   describe("podcastById", () => {
@@ -66,6 +70,10 @@ describe("podcasts api", () => {
     it("returns same object as byUrl", async () => {
       const searchResult = await client.podcastById(feedId);
       expect(searchResult.feed).toEqual(feedByUrl);
+    });
+    it("returns same object as byGuid", async () => {
+      const searchResult = await client.podcastById(feedId);
+      expect(searchResult.feed).toEqual(feedByGuid);
     });
     it.skip("returns same object as byItunesId", async () => {
       const searchResult = await client.podcastById(feedId);
@@ -82,6 +90,10 @@ describe("podcasts api", () => {
     it("returns same object as byUrl", async () => {
       const searchResult = await client.podcastByGuid(guid);
       expect(searchResult.feed).toEqual(feedByUrl);
+    });
+    it("returns same object as byId", async () => {
+      const searchResult = await client.podcastByGuid(guid);
+      expect(searchResult.feed).toEqual(feedById);
     });
     it.skip("returns same object as byItunesId", async () => {
       const searchResult = await client.podcastByUrl(feedUrl);
