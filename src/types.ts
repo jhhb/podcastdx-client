@@ -47,6 +47,8 @@ export interface PIApiEpisodeDetail extends PIApiEpisodeBase {
   duration: number;
 }
 
+export type PIApiItunesEpisodeInfo = Omit<PIApiEpisodeInfo, "podcastGuid" & "feedUrl">;
+
 /** Returned by episodesByFeed*, episodesByItunesId */
 export interface PIApiEpisodeInfo extends PIApiEpisodeBase {
   duration: number;
@@ -301,15 +303,15 @@ export namespace ApiResponse {
     description: string;
   }
 
-  export interface Episodes {
+  export interface Episodes<T = PIApiEpisodeInfo> {
     status: ApiResponse.Status;
-    items: Array<PIApiEpisodeInfo>;
+    items: Array<T>;
     count: number;
     query: string;
     description: string;
   }
 
-  export type EpisodesByItunesId = ApiResponse.Episodes;
+  export type EpisodesByItunesId = ApiResponse.Episodes<PIApiItunesEpisodeInfo>;
   export type EpisodesByFeedId = ApiResponse.Episodes;
   export type EpisodesByFeedUrl = ApiResponse.Episodes;
 
