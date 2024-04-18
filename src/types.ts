@@ -47,12 +47,15 @@ export interface PIApiEpisodeDetail extends PIApiEpisodeBase {
   duration: number;
 }
 
+/** Returned by episodesByItunesId */
 export type PIApiItunesEpisodeInfo = Omit<PIApiEpisodeInfo, "podcastGuid" & "feedUrl">;
 
-/** Returned by episodesByFeed*, episodesByItunesId */
+/** Returned by episodesByFeedId*, episodesByFeedUrl */
 export interface PIApiEpisodeInfo extends PIApiEpisodeBase {
   duration: number;
   transcriptUrl: string | null;
+  podcastGuid: string;
+  feedUrl: string;
 }
 
 /** Returned by episodesRandom */
@@ -71,9 +74,8 @@ export interface PIApiRecentEpisode extends Omit<PIApiEpisodeBase, "chaptersUrl"
 
 /** Returned by searchPerson */
 export interface PIApiPersonEpisode
-  extends Omit<PIApiEpisodeInfo, "datePublishedPretty" | "duration"> {
+  extends Omit<PIApiEpisodeInfo, "datePublishedPretty" | "duration" | "podcastGuid"> {
   duration: number | null;
-  feedUrl: string;
   feedAuthor: string;
   feedTitle: string;
 }
